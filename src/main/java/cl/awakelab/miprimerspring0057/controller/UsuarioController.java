@@ -1,6 +1,8 @@
 package cl.awakelab.miprimerspring0057.controller;
 
+import cl.awakelab.miprimerspring0057.entity.Profesor;
 import cl.awakelab.miprimerspring0057.entity.Usuario;
+import cl.awakelab.miprimerspring0057.service.IProfesorService;
 import cl.awakelab.miprimerspring0057.service.IUsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,11 +18,29 @@ public class UsuarioController {
     @Autowired
     private IUsuarioService objUsuarioService;
 
+    @Autowired
+    IProfesorService objProfesorService;
+
     @GetMapping("/listar")
     public String listarUsuarios(Model model){
         List<Usuario> listaUsuarios = objUsuarioService.listarUsuario();
         model.addAttribute("atributoListaUsuarios", listaUsuarios);
         return "templateListarUsuarios";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String editarUsuario(@PathVariable int id, Model model) {
+        Usuario usuario = objUsuarioService.listarUsuarioId(id);
+        List<Profesor> profesores = objProfesorService.listarProfesores();
+        model.addAttribute("usuario", usuario);
+        model.addAttribute("profesores",profesores);
+        return "templateEditarUsuarios";
+    }
+
+    @PostMapping("/editar")
+    public String editarUsuario(@ModelAttribute Usuario usuario) {
+        objUsuarioService.actualizarUsuario(usuario);
+        return "redirect:/usuario/listar";
     }
 
 

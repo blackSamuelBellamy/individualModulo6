@@ -46,9 +46,25 @@ public class CursoController {
         return "templateCrearCurso";
     }
 
+    @GetMapping("/editar/{id}")
+    public String editarCurso(@PathVariable int id, Model model){
+        Curso curso = objCursoService.listarCursoId(id);
+        List<Profesor> profesores = objProfesorService.listarProfesores();
+        List<Alumno> alumnos = objAlumnoService.listarAlumno();
+        model.addAttribute("curso", curso);
+        model.addAttribute("profesores", profesores);
+        model.addAttribute("alumnos", alumnos);
+        return "templateEditarCurso";
+    }
+
+    @PostMapping("/editar")
+    public String editarCurso(@ModelAttribute Curso curso){
+        objCursoService.actualizarCurso(curso);
+        return "redirect:/curso/listar";
+    }
+
     @PostMapping("/crearCurso")
     public String crearCurso(@ModelAttribute("curso") Curso curso){
-
         objCursoService.crearCurso(curso);
         return "redirect:/curso/listar";
     }

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("profesor")
+@RequestMapping("/profesor")
 public class ProfesorController {
 
     @Autowired
@@ -38,6 +38,21 @@ public class ProfesorController {
     @PostMapping("/crearProfesor")
     public String crearProfesor(@ModelAttribute Profesor profesor){
         objProfesorService.crearProfesor(profesor);
+        return "redirect:/profesor/listar";
+    }
+
+    @GetMapping("/editar/{id}")
+    public String actualizarProfesor(@PathVariable int id, Model model){
+        Profesor profesor = objProfesorService.listarProfesorId(id);
+        List<Curso> cursos = objCursoService.listarCursos();
+        model.addAttribute("profesor", profesor);
+        model.addAttribute("cursos", cursos);
+        return "templateEditarProfesor";
+    }
+
+    @PostMapping("/editar")
+    public String actualizarProfesor(@ModelAttribute Profesor profesor){
+        objProfesorService.actualizarProfesor(profesor);
         return "redirect:/profesor/listar";
     }
 

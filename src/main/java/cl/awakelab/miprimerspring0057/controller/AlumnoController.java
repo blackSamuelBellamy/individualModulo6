@@ -41,6 +41,21 @@ public class AlumnoController {
         return "redirect:/alumno/listar";
     }
 
+    @GetMapping("/editar/{id}")
+    public String editarAlumno(@PathVariable int id, Model model){
+        Alumno alumno = objAlumnoService.listarAlumnoId(id);
+        List<Curso> curso = objCursoService.listarCursos();
+        model.addAttribute("alumno", alumno);
+        model.addAttribute("cursos", curso);
+        return "templateEditarAlumno";
+    }
+
+    @PostMapping("/editar")
+    public String editarAlumno(@ModelAttribute Alumno alumno){
+        objAlumnoService.actualizarAlumno(alumno.getId(), alumno);
+        return "redirect:/alumno/listar";
+    }
+
     @PostMapping("/eliminar/{id}")
     public String eliminarAlumno(@PathVariable Integer id){
         objAlumnoService.eliminarAlumno(id);

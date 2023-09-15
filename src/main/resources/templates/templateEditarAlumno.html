@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar | alumno</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+</head>
+<body>
+<header th:include="~{../static/html/header.html}"></header>
+<section class="container">
+  <div class="text-center">
+    <h2 class="border border-success text-success">Modifica Alumno</h2>
+  </div>
+  <br>
+  <br>
+  <div>
+    <form th:action="@{/alumno/editar}" method="post">
+      <div class="form-group row">
+        <label for="id" class="col-sm-3 col-form-label"></label>
+        <div class="col-sm-9">
+          <input type="hidden" class="form-control" id="id" name="id" th:value="${alumno.id}">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="nombreusuario" class="col-sm-3 col-form-label">Nombre de Alumno:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="nombreusuario" name="nombres" th:value="${alumno.nombres}" required>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="form-group row">
+        <label for="apellido1" class="col-sm-3 col-form-label"> Primer Apellido:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="apellido1" th:value="${alumno.apellido1}" name="apellido1" required>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="form-group row">
+        <label for="apellido2" class="col-sm-3 col-form-label"> Segundo Apellido:</label>
+        <div class="col-sm-9">
+          <input type="text" class="form-control" id="apellido2" th:value="${alumno.apellido2}" name="apellido2" required>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="form-group row">
+        <label for="rol" class="col-sm-3 col-form-label" > Seleccione curso:</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="cursoAsignado" id="rol" required>
+            <option th:selected="${alumno.cursoAsignado.getId()}" th:value="${curso.getId()}"  th:text="${alumno.getCursoAsignado().getNombreCurso()}" th:each="curso: ${cursos}" ></option>
+          </select>
+        </div>
+      </div>
+      <br>
+      <br>
+      <div class="row">
+        <div class="col-5"></div>
+        <div class="col-2">
+          <button type="submit" class="btn btn-outline-success">Modificar Alumno</button>
+        </div>
+        <div class="col-5"></div>
+      </div>
+      <br>
+      <br>
+    </form>
+  </div>
+</section>
+</body>
+</html>
